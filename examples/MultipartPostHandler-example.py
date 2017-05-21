@@ -5,10 +5,10 @@
 """
 
 def main():
-    import tempfile, sys, os, urllib2, MultipartPostHandler
+    import tempfile, sys, os, urllib.request, urllib.error, urllib.parse, MultipartPostHandler
 
     validatorURL = "http://validator.w3.org/check"
-    opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler)
+    opener = urllib.request.build_opener(MultipartPostHandler.MultipartPostHandler)
 
     def validateFile(url):
         temp = tempfile.mkstemp(suffix=".html")
@@ -16,7 +16,7 @@ def main():
         params = { "ss" : "0",            # show source
             "doctype" : "Inline", 
             "uploaded_file" : open(temp[1], "rb") }
-        print(opener.open(validatorURL, params).read())
+        print((opener.open(validatorURL, params).read()))
         os.remove(temp[1])
 
     if len(sys.argv[1:]) > 0:
